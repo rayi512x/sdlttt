@@ -37,11 +37,9 @@ int moveCounter;
 
 int init() {
 	// initialization
-	int error = 0;
-
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		fprintf(stderr, "Cannot initialize SDL: %s\n", SDL_GetError());
-		return 1;
+		return 0;
 	}
 
 	SDL_Surface* assets;
@@ -50,7 +48,6 @@ int init() {
 	SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_SHOWN, &window, &renderer);
 	if (!window) {
 		fprintf(stderr, "Cannot create window: %s\n", SDL_GetError());
-		error = 1;
 		goto windowCreationFail;
 	}
 
@@ -61,7 +58,6 @@ int init() {
 	
 windowCreationFail:
 	SDL_FreeSurface(assets);
-imgInitFail:
 	SDL_Quit();
 
 	return 0;
