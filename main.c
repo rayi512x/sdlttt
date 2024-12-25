@@ -230,7 +230,10 @@ int main(int argc, char* argv[]) {
 	render(0, 0, 0);
 	titlemaker(N, 0);
 
+	Uint64 start, end;
 	while (running) {
+		start = SDL_GetTicks64();
+
 		while (SDL_PollEvent(&e)) {
 			switch (e.type) {
 				case SDL_QUIT: running = 0; break;
@@ -263,6 +266,10 @@ int main(int argc, char* argv[]) {
 					break;
 			}
 		}
+
+		end = SDL_GetTicks64();
+		if ((1000 / 30) > (end - start)) // poll 30fps
+			SDL_Delay((1000 / 30) - (end - start));
 	}
 
 	// deinitialization
